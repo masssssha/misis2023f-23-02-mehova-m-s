@@ -13,3 +13,4 @@ project ("CMakeProject1")
 
 # Включите подпроекты.
 add_subdirectory ("prj.codeforces")
+add_subdirectory ("prj.lab")
