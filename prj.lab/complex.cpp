@@ -83,11 +83,11 @@ int main()
     minus.print();
     Complex mul = z * y;
     mul.print();
-    if (y.re != 0 && y.im != 0) {
-        Complex div = z / y;
-        div.print();
+    if (y.re == 0 && y.im == 0) {
+        std::cout << "ERROR DIVISION";
     }
     else {
-        std::cout << "ERROR DIVISION";
+        Complex div = z / y;
+        div.print();
     }
 }
