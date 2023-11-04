@@ -83,7 +83,7 @@ int main()
     minus.print();
     Complex mul = z * y;
     mul.print();
-    if (z.im != 0 && y.im != 0) {
+    if (y.re != 0 && y.im != 0) {
         Complex div = z / y;
         div.print();
     }
