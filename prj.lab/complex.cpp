@@ -62,10 +62,10 @@ int main()
     std::cout << Complex(8, 0) << " - " << w << " = " << (Complex(8, 0) - w) << std::endl;
     std::cout << Complex(8, 0) << " * " << y << " = " << (Complex(8, 0) * y) << std::endl;
     std::cout << Complex(8, 0) << " / " << Complex(1, 0) << " = " << (Complex(8, 0) / Complex(1, 0)) << std::endl;
-    std::cout << z << " + " << 3 << " = " << (z + 3) << std::endl;
-    std::cout << y << " - " << 2.1 << " = " << (y - 2.1) << std::endl;
-    std::cout << w << " * " << 4 << " = " << (w * 4) << std::endl;
-    std::cout << z << " / " << 5 << " = " << (z / 5) << std::endl;
+    std::cout << z << " + " << 3 << " = " << (z + Complex(3)) << std::endl;
+    std::cout << y << " - " << 2.1 << " = " << (y - Complex(2.1)) << std::endl;
+    std::cout << w << " * " << 4 << " = " << (w * Complex(4)) << std::endl;
+    std::cout << z << " / " << 5 << " = " << (z / Complex(5)) << std::endl;
 }
 
 Complex::Complex(const double real, const double imaginary) : re(real), im(imaginary) {}
