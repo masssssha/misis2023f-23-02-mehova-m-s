@@ -1,93 +1,103 @@
 #include <iostream>
+#include <sstream>
 
 struct Complex {
     double re{ 0.0 };
     double im{ 0.0 };
-    Complex(double real, double imaginary) {
-        re = real;
-        im = imaginary;
-    }
-    void print() {
-        std::cout << "{" << re << "," << im << "}" << std::endl;
-    }
-    bool operator==(const Complex& x) const { 
-        return (re == x.re) && (im == x.im); 
-    }
-    bool operator!=(const Complex & x) const { 
-        return !operator==(x); 
-    }
-    Complex& operator+=(const Complex& x) {
-        re += x.re;
-        im += x.im;
-        return *this;
-    }
-    Complex& operator-=(const Complex& x) {
-        re -= x.re;
-        im -= x.im;
-        return *this;
-    }
-    Complex& operator*=(const Complex& x) {
-        double re1(this->re);
-        double im1(this->im);
-        this->re = re1 * x.re - im1 * x.im;
-        this->im = re1 * x.im + im1 * x.re;
-        return *this;
-    }
-    Complex& operator/=(const Complex& x) {
-        double re1(this->re);
-        double im1(this->im);
-        this->re = (re1 * x.re + im1 * x.im) / (x.re * x.re + x.im * x.im);
-        this->im = (im1 * x.re - re1 * x.im) / (x.re * x.re + x.im * x.im);
-        return *this;
-    }
+    Complex(const double real, const double imaginary);
+    Complex(const double real);
+    Complex() = default;
+    ~Complex() = default;
+    bool operator==(const Complex& x) const { return (re == x.re) && (im == x.im); }
+    bool operator!=(const Complex & x) const { return !operator==(x); }
+    Complex& operator=(const Complex&) = default;
+    Complex& operator+=(const Complex& x);
+    Complex& operator-=(const Complex& x);
+    Complex& operator*=(const Complex& x);
+    Complex& operator/=(const Complex& x);
+    std::ostream& writeTo(std::ostream& ostrm) const;
+    static const char leftBrace{ '{' };
+    static const char separator{ ',' };
+    static const char rightBrace{ '}' };
 };
-Complex operator+(const Complex& x, const Complex& y) {
-    Complex sum(x);
-    sum += y;
-    std::cout << "ADDITION: ";
-    return sum;
+
+inline std::ostream& operator<<(std::ostream& ostrm, const Complex& rhs) {
+    return rhs.writeTo(ostrm);
 }
-Complex operator-(const Complex& x, const Complex& y) {
-    Complex sum(x);
-    sum -= y;
-    std::cout << "SUBTRACTION: ";
-    return sum;
+
+Complex operator+(const Complex& x, const Complex& y) {
+    return Complex(x) += y;
+}
+Complex operator-(const Complex& lhs, const Complex& rhs) {
+    return Complex(lhs) -= rhs;
 }
 Complex operator*(const Complex& x, const Complex& y) {
-    Complex total(x);
-    total *= y;
-    std::cout << "MULTIPLICATION: ";
-    return total;
+    return Complex(x) *= y;
 }
 Complex operator/(const Complex& x, const Complex& y) {
-    Complex total(x);
-    total /= y;
-    std::cout << "DIVISION: ";
-    return total;
+    return Complex(x) /= y;
 }
 
 int main()
 {
-    std::cout << "Enter 4 numbers: " << std::endl;
-    double first(0), second(0), f(0), s(0);
-    std::cin >> first >> second >> f >> s;
-    Complex z(first, second);
-    Complex y(f, s);
-    std::cout << "First complex number: ";
-    z.print();
-    std::cout << "Second complex number: ";
-    y.print();
-    Complex sum = z + y;
-    sum.print();
-    Complex minus = z - y;
-    minus.print();
-    Complex mul = z * y;
-    mul.print();
-    if (y.re == 0 && y.im == 0) {
-        std::cout << "ERROR DIVISION";
-    }
-    else {
-        Complex div = z / y;
-        div.print();
-    }
+    Complex z(1, 8);
+    Complex y(2, 3);
+    std::cout << "First complex number: " << z << std::endl;
+    std::cout << "Second complex number: " << y << std::endl;
+    Complex w = z;
+    std::cout << "Third complex number = first: " << w << " = " << z << std::endl;
+    std::cout << z << " += " << w << ": ";
+    z += w;
+    std::cout << z << std::endl;
+    std::cout << y << " -= " << z << ": ";
+    y -= z;
+    std::cout << y << std::endl;
+    std::cout << w << " *= " << z << ": ";
+    w *= z;
+    std::cout << w << std::endl;
+    std::cout << w << " /= " << z << ": ";
+    w /= z;
+    std::cout << z << std::endl;
+    std::cout << Complex(8, 0) << " + " << y << " = " << (Complex(8, 0) + y) << std::endl;
+    std::cout << Complex(8, 0) << " - " << w << " = " << (Complex(8, 0) - w) << std::endl;
+    std::cout << Complex(8, 0) << " * " << y << " = " << (Complex(8, 0) * y) << std::endl;
+    std::cout << Complex(8, 0) << " / " << Complex(1, 0) << " = " << (Complex(8, 0) / Complex(1, 0)) << std::endl;
+    std::cout << z << " + " << 3 << " = " << (z + 3) << std::endl;
+    std::cout << y << " - " << 2.1 << " = " << (y - 2.1) << std::endl;
+    std::cout << w << " * " << 4 << " = " << (w * 4) << std::endl;
+    std::cout << z << " / " << 5 << " = " << (z / 5) << std::endl;
+}
+
+Complex::Complex(const double real, const double imaginary) : re(real), im(imaginary) {}
+Complex::Complex(const double real) : Complex(real, 0) {}
+
+Complex& Complex::operator+=(const Complex& x) {
+    re += x.re;
+    im += x.im;
+    return *this;
+}
+
+Complex& Complex::operator-=(const Complex& x) {
+    re -= x.re;
+    im -= x.im;
+    return *this;
+}
+Complex& Complex::operator*=(const Complex& x) {
+    double re1((*this).re);
+    double im1((*this).im);
+    re = re1 * x.re - im1 * x.im;
+    im = re1 * x.im + im1 * x.re;
+    return *this;
+}
+Complex& Complex::operator/=(const Complex& x) {
+    double re1((*this).re);
+    double im1((*this).im);
+    re = (re1 * x.re + im1 * x.im) / (x.re * x.re + x.im * x.im);
+    im = (im1 * x.re - re1 * x.im) / (x.re * x.re + x.im * x.im);
+    return *this;
+}
+
+std::ostream& Complex::writeTo(std::ostream& ostrm) const {
+    ostrm << leftBrace << re << separator << im << rightBrace;
+    return ostrm;
 }
