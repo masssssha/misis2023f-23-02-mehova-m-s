@@ -5,7 +5,7 @@ struct Complex {
     double re{ 0.0 };
     double im{ 0.0 };
     Complex(const double real, const double imaginary);
-    Complex(const double real);
+    explicit Complex(const double real);
     Complex() = default;
     ~Complex() = default;
     bool operator==(const Complex& x) const { return (re == x.re) && (im == x.im); }
