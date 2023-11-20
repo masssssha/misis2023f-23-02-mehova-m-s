@@ -24,9 +24,9 @@ class Rational {
 		Rational operator*=(const Rational& x);
 		Rational operator/=(const Rational& x);
 		static const char sign{ '/' };
+	private:
 		int num_ = 0;
 		int den_ = 1;
-	private:
 		int nod(const int& x, const int& y) {
 			int a = std::max(std::abs(x), std::abs(y));
 			int b = std::min(std::abs(x), std::abs(y));
