@@ -12,6 +12,9 @@ Rational::Rational(const int& first, const int& second) {
 		num_ = -first / nod(first, -second);
 		den_ = -second / nod(first, -second);
 	}
+	if (second == 0) {
+		throw std::invalid_argument("Zero denumenator in Rational ctor");
+	}
 }
 Rational::Rational(const int& first) {
 	num_ = first;
