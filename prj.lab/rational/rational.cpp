@@ -45,33 +45,37 @@ std::ostream& Rational::WriteTo(std::ostream& ostrm) const {
 }
 
 //operator += -= *= /=
-Rational Rational::operator+=(const Rational& x) {
+Rational& Rational::operator+=(const Rational& x) {
 	int num_1 = num_;
 	int den1 = den_;
 	num_ = (num_1 * x.den_) + (x.num_ * den1);
 	den_ = den1 * x.den_;
-	return norm(num_, den_);
+	norm(num_, den_);
+	return *this;
 }
-Rational Rational::operator-=(const Rational &x) {
+Rational& Rational::operator-=(const Rational &x) {
 	int num_1 = num_;
 	int den1 = den_;
 	num_ = (num_1 * x.den_) - (x.num_ * den1);
 	den_ = den1 * x.den_;
-	return norm(num_, den_);
+	norm(num_, den_);
+	return *this;
 }
 
-Rational Rational::operator*=(const Rational& x) {
+Rational& Rational::operator*=(const Rational& x) {
 	num_ *= x.num_;
 	den_ *= x.den_;
-	return norm(num_, den_);
+	norm(num_, den_);
+	return *this;
 }
 
-Rational Rational::operator/=(const Rational& x) {
+Rational& Rational::operator/=(const Rational& x) {
 	if (x.num_ != 0) {
 		num_ *= x.den_;
 		den_ *= x.num_;
 	}
-	return norm(num_, den_);
+	norm(num_, den_);
+	return *this;
 }
 
 //operator r + r, d + r, r + d

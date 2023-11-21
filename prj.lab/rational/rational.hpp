@@ -19,10 +19,10 @@ class Rational {
 		bool operator<(const Rational& x) const { return num_ * x.den_ - x.num_ * den_ < 0; }
 		bool operator>=(const Rational& x) const { return num_ * x.den_ - x.num_ * den_ >= 0; }
 		bool operator<=(const Rational& x) const { return num_ * x.den_ - x.num_ * den_ <= 0; }
-		Rational operator+=(const Rational& x);
-		Rational operator-=(const Rational& x);
-		Rational operator*=(const Rational& x);
-		Rational operator/=(const Rational& x);
+		Rational& operator+=(const Rational& x);
+		Rational& operator-=(const Rational& x);
+		Rational& operator*=(const Rational& x);
+		Rational& operator/=(const Rational& x);
 		static const char sign{ '/' };
 	private:
 		int num_ = 0;
@@ -38,11 +38,10 @@ class Rational {
 			}
 			return b;
 		}
-		Rational norm(int& x, int& y) {
+		void norm(int& x, int& y) {
 			auto ans = nod(std::abs(x), std::abs(y));
 			x /= ans;
 			y /= ans;
-			return Rational(x, y);
 		}
 };
 
