@@ -40,6 +40,10 @@ class Rational {
 		}
 		void norm(int& x, int& y) {
 			auto ans = nod(std::abs(x), std::abs(y));
+			if (y < 0) {
+				x *= (-1);
+				y *= (-1);
+			}
 			x /= ans;
 			y /= ans;
 		}
