@@ -1,6 +1,7 @@
 #ifndef RATIONAL_HPP
 #define RATIONAL_HPP
-#include <iostream>
+
+#include <iosfwd>
 #include <sstream>
 
 class Rational {
@@ -38,14 +39,14 @@ class Rational {
 			}
 			return b;
 		}
-		void norm(int& x, int& y) {
-			auto ans = nod(std::abs(x), std::abs(y));
-			if (y < 0) {
-				x *= (-1);
-				y *= (-1);
+		void norm() {
+			auto ans = nod(std::abs(num_), std::abs(den_));
+			if (den_ < 0) {
+				num_ *= (-1);
+				den_ *= (-1);
 			}
-			x /= ans;
-			y /= ans;
+			num_ /= ans;
+			den_ /= ans;
 		}
 };
 

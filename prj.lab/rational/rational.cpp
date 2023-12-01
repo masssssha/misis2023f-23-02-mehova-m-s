@@ -1,6 +1,7 @@
+#include <rational/rational.hpp>
+
 #include <iostream>
 #include <sstream>
-#include <rational/rational.hpp>
 
 //конструктор
 Rational::Rational(const int& first, const int& second) {
@@ -30,8 +31,7 @@ std::istream& Rational::ReadFrom(std::istream& istrm) {
 		if (znak == '/' && s != 0) {
 			num_ = f;
 			den_ = s;
-		}
-		else {
+		} else {
 			istrm.setstate(std::ios_base::failbit);
 		}
 	}
@@ -50,7 +50,7 @@ Rational& Rational::operator+=(const Rational& x) {
 	int den1 = den_;
 	num_ = (num_1 * x.den_) + (x.num_ * den1);
 	den_ = den1 * x.den_;
-	norm(num_, den_);
+	norm();
 	return *this;
 }
 Rational& Rational::operator-=(const Rational &x) {
@@ -58,14 +58,14 @@ Rational& Rational::operator-=(const Rational &x) {
 	int den1 = den_;
 	num_ = (num_1 * x.den_) - (x.num_ * den1);
 	den_ = den1 * x.den_;
-	norm(num_, den_);
+	norm();
 	return *this;
 }
 
 Rational& Rational::operator*=(const Rational& x) {
 	num_ *= x.num_;
 	den_ *= x.den_;
-	norm(num_, den_);
+	norm();
 	return *this;
 }
 
@@ -74,7 +74,7 @@ Rational& Rational::operator/=(const Rational& x) {
 		num_ *= x.den_;
 		den_ *= x.num_;
 	}
-	norm(num_, den_);
+	norm();
 	return *this;
 }
 
