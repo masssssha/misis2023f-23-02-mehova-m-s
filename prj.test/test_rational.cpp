@@ -18,4 +18,5 @@ TEST_CASE("rational ctor") {
     CHECK(x / z == Rational(-3, 4));
     CHECK((Rational(2, 3) >= Rational(1, 1)) == 0);
     CHECK((Rational(2, 3) < Rational(1, 1)) == 1);
+    CHECK(Rational(3, -6) == Rational(-1, 2));
 }
