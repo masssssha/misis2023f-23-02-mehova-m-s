@@ -17,7 +17,22 @@ struct Complex {
     Complex& operator-=(const Complex& x);
     Complex& operator*=(const Complex& x);
     Complex& operator/=(const Complex& x);
-    Complex operator-() const noexcept { return Complex(-re, -im); }
+    Complex operator-() const noexcept {
+      if (im != 0 && re != 0) {
+        return Complex(-re, -im);
+      }
+      else {
+        if (im == 0 && re != 0) {
+          return Complex(-re, im);
+        }
+        if (re == 0 && im != 0) {
+          return Complex(re, -im);
+        }
+        if (re == 0 && im == 0) {
+          return Complex(re, im);
+        }
+      }
+    }
     std::ostream& writeTo(std::ostream& ostrm) const;
     std::istream& ReadFrom(std::istream& istrm);
     static const char leftBrace{ '{' };

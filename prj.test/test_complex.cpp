@@ -44,7 +44,7 @@ void TestDiv(Complex x, Complex y, double z) {
 int main()
 {
     Complex x(1, 8);
-    Complex y(0, 1);
+    Complex y(0, -1);
     Complex g = -y;
     std::cout << g << std::endl;
     double z = 2.0;
