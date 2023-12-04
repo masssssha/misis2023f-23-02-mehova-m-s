@@ -1,5 +1,5 @@
-/*#define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
-#include "doctest.h"*/
+#define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
+#include "doctest.h"
 
 #include <iostream>
 #include <cstddef>
@@ -57,7 +57,19 @@ void DynArr::Resize(const std::ptrdiff_t s) {
 		size_ = s;
 	}
 	else {
-
+		DynArr b(*this);
+		delete[] data_;
+		data_ = nullptr;
+		data_ = new float[s];
+		size_ = s;
+		for (int i = 0; i < s; i++) {
+			if (i < b.Size()) {
+				*(data_ + i) = b[i];
+			}
+			else {
+				*(data_ + i) = 0;
+			}
+		}
 	}
 }
 
@@ -76,20 +88,7 @@ const float& DynArr::operator[](const std::ptrdiff_t i) const {
 	return *(data_+i);
 }
 
-
-int main() {
-	DynArr a(5);
-	DynArr b(a);
-	a[2] = 5;
-	a[6] = 4;
-	for (int i = 0; i < 5; i++) {
-		std::cout << "a: " << a[i] << std::endl;
-		std::cout << "b: " << b[i] << std::endl;
-	}
-}
-
-
-/*TEST_CASE("dynarr ctor") {
+TEST_CASE("dynarr ctor") {
 	DynArr arr_def;
 	CHECK_EQ(arr_def.Size(), 0);
 
@@ -98,17 +97,19 @@ int main() {
 	CHECK_EQ(arr_s.Size(), Size);
 }
 
+
+
 TEST_CASE("dynarr op[]") {
 	const int Size = 5;
 	DynArr arr(Size);
 	DynArr b(arr);
-	//CHECK_EQ(arr[0], doctest::Approx(0.0f));
-	//CHECK_EQ(arr[arr.Size() - 1], doctest::Approx(0.0f));
-	//REQUIRE(arr[0] == doctest::Approx(0.0f));
-	//CHECK_EQ(arr[0], b[0]);
-	//CHECK_THROWS(arr[20]);
-	//arr[3] = 2;
-	//CHECK(arr[0] == b[0]);
+	CHECK_EQ(arr[0], doctest::Approx(0.0f));
+	CHECK_EQ(arr[arr.Size() - 1], doctest::Approx(0.0f));
+	REQUIRE(arr[3] == doctest::Approx(0.0f));
+	CHECK_EQ(arr[0], b[0]);
+	CHECK_THROWS(arr[20]);
+	arr[3] = 2;
+	CHECK(arr[3] != b[3]);
 }
 
 TEST_CASE("dynarr res") {
@@ -116,9 +117,10 @@ TEST_CASE("dynarr res") {
 	DynArr arr(Size);
 	arr.Resize(12);
 	CHECK_NOTHROW(arr[11]);
+	CHECK(arr[10] == 0);
 	arr.Resize(6);
 	CHECK_THROWS(arr[11]);
 	arr[4] = 5;
 	CHECK_EQ(arr[4], 5);
 	CHECK(arr[5] == 0.0f);
-}*/
+}
