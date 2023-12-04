@@ -9,9 +9,13 @@ class Rational {
 		Rational() = default;
 		~Rational() = default;
 		Rational(const Rational& x) = default;
-		Rational(const int& first, const int& second);
-		Rational(const int& first);
+		Rational(const int64_t& first, const int64_t& second);
+		Rational(const int64_t& first);
 		Rational& operator=(const Rational&) = default;
+
+		std::int64_t num() const noexcept { return num_; }
+		std::int64_t den() const noexcept { return den_; }
+
 		std::istream& ReadFrom(std::istream& istrm);
 		std::ostream& WriteTo(std::ostream& ostrm) const;
 		bool operator==(const Rational& x) const { return num_ * x.den_ - x.num_ * den_ == 0; }
@@ -25,15 +29,15 @@ class Rational {
 		Rational& operator*=(const Rational& x);
 		Rational& operator/=(const Rational& x);
 		static const char sign{ '/' };
+		int64_t num_ = 0;
+		int64_t den_ = 1;
 	private:
-		int num_ = 0;
-		int den_ = 1;
-		int nod(const int& x, const int& y) {
-			int a = std::max(std::abs(x), std::abs(y));
-			int b = std::min(std::abs(x), std::abs(y));
+		int64_t nod(const int64_t& x, const int64_t& y) {
+			int64_t a = std::max(std::abs(x), std::abs(y));
+			int64_t b = std::min(std::abs(x), std::abs(y));
 			while (a != b) {
 				a -= b;
-				int temp = a;
+				int64_t temp = a;
 				a = std::max(temp, b);
 				b = std::min(temp, b);
 			}
@@ -51,17 +55,17 @@ class Rational {
 };
 
 Rational operator+(const Rational& x, const Rational& y);
-Rational operator+(const Rational& x, const int& y);
-Rational operator+(const int& x, const Rational& y);
+Rational operator+(const Rational& x, const int64_t& y);
+Rational operator+(const int64_t& x, const Rational& y);
 Rational operator-(const Rational& x, const Rational& y);
-Rational operator-(const Rational& x, const int& y);
-Rational operator-(const int& x, const Rational& y);
+Rational operator-(const Rational& x, const int64_t& y);
+Rational operator-(const int64_t& x, const Rational& y);
 Rational operator*(const Rational& x, const Rational& y);
-Rational operator*(const Rational& x, const int& y);
-Rational operator*(const int& x, const Rational& y);
+Rational operator*(const Rational& x, const int64_t& y);
+Rational operator*(const int64_t& x, const Rational& y);
 Rational operator/(const Rational& x, const Rational& y);
-Rational operator/(const Rational& x, const int& y);
-Rational operator/(const int& x, const Rational& y);
+Rational operator/(const Rational& x, const int64_t& y);
+Rational operator/(const int64_t& x, const Rational& y);
 
 inline std::istream& operator>>(std::istream& istrm, Rational& x) {
 	return x.ReadFrom(istrm);

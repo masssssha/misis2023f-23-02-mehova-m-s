@@ -4,7 +4,7 @@
 #include <sstream>
 
 //конструктор
-Rational::Rational(const int& first, const int& second) {
+Rational::Rational(const int64_t& first, const int64_t& second) {
 	if (second > 0) {
 		num_ = first / nod(first, second);
 		den_ = second / nod(first, second);
@@ -17,14 +17,14 @@ Rational::Rational(const int& first, const int& second) {
 			throw std::invalid_argument("Zero denumenator in Rational ctor");
 	}
 }
-Rational::Rational(const int& first) {
+Rational::Rational(const int64_t& first) {
 	num_ = first;
 	den_ = 1;
 }
 
 //ввод
 std::istream& Rational::ReadFrom(std::istream& istrm) {
-	int f(0), s(0);
+	int64_t f(0), s(0);
 	char znak;
 	istrm >> f >> znak >> s;
 	if (istrm.good()) {
@@ -46,16 +46,16 @@ std::ostream& Rational::WriteTo(std::ostream& ostrm) const {
 
 //operator += -= *= /=
 Rational& Rational::operator+=(const Rational& x) {
-	int num_1 = num_;
-	int den1 = den_;
+	int64_t num_1 = num_;
+	int64_t den1 = den_;
 	num_ = (num_1 * x.den_) + (x.num_ * den1);
 	den_ = den1 * x.den_;
 	norm();
 	return *this;
 }
 Rational& Rational::operator-=(const Rational &x) {
-	int num_1 = num_;
-	int den1 = den_;
+	int64_t num_1 = num_;
+	int64_t den1 = den_;
 	num_ = (num_1 * x.den_) - (x.num_ * den1);
 	den_ = den1 * x.den_;
 	norm();
@@ -83,10 +83,10 @@ Rational& Rational::operator/=(const Rational& x) {
 Rational operator+(const Rational& x, const Rational& y) {
 	return Rational(x) += y;
 }
-Rational operator+(const Rational& x, const int& y) {
+Rational operator+(const Rational& x, const int64_t& y) {
 	return Rational(x) += Rational(y);
 }
-Rational operator+(const int& x, const Rational& y) {
+Rational operator+(const int64_t& x, const Rational& y) {
 	return Rational(x) += Rational(y);
 }
 
@@ -94,10 +94,10 @@ Rational operator+(const int& x, const Rational& y) {
 Rational operator-(const Rational& x, const Rational& y) {
 	return Rational(x) -= y;
 }
-Rational operator-(const Rational& x, const int& y) {
+Rational operator-(const Rational& x, const int64_t& y) {
 	return Rational(x) -= Rational(y);
 }
-Rational operator-(const int& x, const Rational& y) {
+Rational operator-(const int64_t& x, const Rational& y) {
 	return Rational(x) -= Rational(y);
 }
 
@@ -105,10 +105,10 @@ Rational operator-(const int& x, const Rational& y) {
 Rational operator*(const Rational& x, const Rational& y) {
 	return Rational(x) *= y;
 }
-Rational operator*(const Rational& x, const int& y) {
+Rational operator*(const Rational& x, const int64_t& y) {
 	return Rational(x) *= Rational(y);
 }
-Rational operator*(const int& x, const Rational& y) {
+Rational operator*(const int64_t& x, const Rational& y) {
 	return Rational(x) *= Rational(y);
 }
 
@@ -117,9 +117,9 @@ Rational operator*(const int& x, const Rational& y) {
 Rational operator/(const Rational& x, const Rational& y) {
 	return Rational(x) /= y;
 }
-Rational operator/(const Rational& x, const int& y) {
+Rational operator/(const Rational& x, const int64_t& y) {
 	return Rational(x) /= Rational(y);
 }
-Rational operator/(const int& x, const Rational& y) {
+Rational operator/(const int64_t& x, const Rational& y) {
 	return Rational(x) /= Rational(y);
 }
