@@ -16,8 +16,8 @@ int main()
             }
         }
         int count(0);
-        if (a.size() != 0) {
-            count = a[a.size() - 1] - a[0] + 2;
+        if (a.Size() != 0) {
+            count = a[a.Size() - 1] - a[0] + 2;
         }
         std::cout << count << std::endl;
     }

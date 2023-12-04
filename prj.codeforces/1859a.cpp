@@ -21,7 +21,7 @@ int main() {
                 b.push_back(a[j]);
             }
             else {
-                if (c.size() + 1 != a.size()) {
+                if (c.Size() + 1 != a.Size()) {
                     c.push_back(a[j]);
                 }
                 else {
@@ -30,18 +30,18 @@ int main() {
             }
         }
         int flag = 0;
-        for (int j = 0; j < b.size(); j++) {
+        for (int j = 0; j < b.Size(); j++) {
             if (b[j] % c[0] == 0) {
                 flag = 1;
             }
         }
         if (flag == 0) {
-            std::cout << b.size() << " " << c.size() << std::endl;
-            for (int k = 0; k < b.size(); k++) {
+            std::cout << b.Size() << " " << c.Size() << std::endl;
+            for (int k = 0; k < b.Size(); k++) {
                 std::cout << b[k] << " ";
             }
             std::cout << std::endl;
-            for (int k = 0; k < c.size(); k++) {
+            for (int k = 0; k < c.Size(); k++) {
                 std::cout << c[k] << " ";
             }
             std::cout << std::endl;

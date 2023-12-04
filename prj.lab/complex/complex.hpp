@@ -18,10 +18,14 @@ struct Complex {
     Complex& operator*=(const Complex& x);
     Complex& operator/=(const Complex& x);
     std::ostream& writeTo(std::ostream& ostrm) const;
+    std::istream& ReadFrom(std::istream& istrm);
     static const char leftBrace{ '{' };
     static const char separator{ ',' };
     static const char rightBrace{ '}' };
 };
+inline std::istream& operator>>(std::istream& istrm, Complex& x) {
+  return x.ReadFrom(istrm);
+}
 inline std::ostream& operator<<(std::ostream& ostrm, const Complex& rhs) {
     return rhs.writeTo(ostrm);
 }

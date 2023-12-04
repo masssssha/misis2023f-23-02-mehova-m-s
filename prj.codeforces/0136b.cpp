@@ -46,8 +46,8 @@ int main() {
         pupu /= 3;
     }
     int total(0);
-    int step = ans.size() - 1;
-    for (int i = ans.size() - 1; i >= 0; i--) {
+    int step = ans.Size() - 1;
+    for (int i = ans.Size() - 1; i >= 0; i--) {
         total = total + ans[i] * pow(3, step);
         step -= 1;
     }

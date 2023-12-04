@@ -12,7 +12,7 @@ int main() {
     }
     std::vector <int> b;
     int count = 0;
-    for (int i = a.size() - 1; i >= 1; i--) {
+    for (int i = a.Size() - 1; i >= 1; i--) {
         if (a[i] != -1000000) {
             count += 1;
             for (int j = i - 1; j >= 0; j--) {
@@ -26,7 +26,7 @@ int main() {
         count += 1;
     }
     std::cout << count << std::endl;
-    for (int i = 0; i < a.size(); i++) {
+    for (int i = 0; i < a.Size(); i++) {
         if (a[i] != -1000000) {
             std::cout << a[i] << " ";
         }

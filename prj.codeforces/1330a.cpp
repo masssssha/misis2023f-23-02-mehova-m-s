@@ -26,7 +26,7 @@ int main()
             l += 1;
         }
         int v = 0;
-        for (int j = 0; j < b.size() - 1; j++) {
+        for (int j = 0; j < b.Size() - 1; j++) {
             v = b[j];
         }
         std::cout << v << std::endl;

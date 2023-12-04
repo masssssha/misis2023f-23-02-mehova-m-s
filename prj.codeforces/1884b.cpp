@@ -16,7 +16,7 @@ int main() {
 				a.push_back(j);
 			}
 		}
-		int len = a.size();
+		int len = a.Size();
 		long long count(0);
 		int g(1);
 		for (int j = 0; j < n; j++) {

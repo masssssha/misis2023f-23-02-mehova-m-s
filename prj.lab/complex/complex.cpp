@@ -75,6 +75,22 @@ Complex& Complex::operator/=(const Complex& x) {
     return *this;
 }
 
+std::istream& Complex::ReadFrom(std::istream& istrm) {
+  int f(0), s(0);
+  char left, com, right;
+  istrm >> left >> f >> com >> s >> right;
+  if (istrm.good()) {
+    if (left == '{' && com == ',' && right == '}') {
+      re = f;
+      im = s;
+    }
+    else {
+      istrm.setstate(std::ios_base::failbit);
+    }
+  }
+  return istrm;
+}
+
 std::ostream& Complex::writeTo(std::ostream& ostrm) const {
     ostrm << leftBrace << re << separator << im << rightBrace;
     return ostrm;

@@ -1,61 +1,105 @@
+#define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
+#include "doctest.h"
+
 #include <iostream>
 #include <cstddef>
 #include <stdexcept>
 
-float bbb = 5;
-float error = -1;
-
 class DynArr {
 public:
 	DynArr() = default;
-	DynArr(const DynArr&);
+	DynArr(const DynArr&) = default;
 	DynArr(const std::ptrdiff_t s);
-	~DynArr() = default;
-	std::ptrdiff_t size() const;
-	void resize(const std::ptrdiff_t s);
+	~DynArr();
+	std::ptrdiff_t Size() const;
+	void Resize(const std::ptrdiff_t s);
 	float& operator[](const std::ptrdiff_t i);
 	const float& operator[](const std::ptrdiff_t i) const;
 private:
 	std::ptrdiff_t size_ = 0;
 	float* data_ = nullptr;
-
+	float first = 0.0;
 };
 
-int main() {
+/*int main() {
 	DynArr a(20);
-	std::cout << a.size() << std::endl;
+	DynArr b = a;
+	std::cout << b.size() << std::endl;
 	a.resize(15);
+	std::cout << a[0] << std::endl;
 	std::cout << a.size() << std::endl;
-	std::cout << a[20] << std::endl;
+	std::cout << a[16] << std::endl;
+}*/
+
+DynArr::DynArr(const std::ptrdiff_t s) 
+	: size_(s) {
+	if (s <= 0) {
+		throw std::out_of_range("Index out of range");
+	}
+	data_ = new float[s] {0.0f};
 }
 
-DynArr::DynArr(const std::ptrdiff_t s) {
-	size_ = s;
+DynArr::~DynArr() {
+	delete[] data_;
 }
 
-std::ptrdiff_t DynArr::size() const {
+std::ptrdiff_t DynArr::Size() const {
 	return size_;
 }
 
-void DynArr::resize(const std::ptrdiff_t s) {
-	size_ = s;
+void DynArr::Resize(const std::ptrdiff_t s) {
+	if (s <= 0) {
+		std::cout << "Size should be more than zero";
+	}
+	else {
+		size_ = s;
+	}
 }
 
 float& DynArr::operator[](const std::ptrdiff_t i) {
 	if (i < 0 || i >= size_) {
-		std::cout << "Index out of range";
-		return error;
+		throw std::out_of_range("Index out of range");
 	}
-	else {
-		return bbb;
-	}
+	return *(data_ + i);
 }
 
 const float& DynArr::operator[](const std::ptrdiff_t i) const {
 	if (i < 0 || i >= size_) {
 		throw std::out_of_range("Index out of range");
 	}
-	else {
-		return bbb;
-	}
+	return *(data_+i);
+}
+
+TEST_CASE("dynarr ctor") {
+	DynArr arr_def;
+	CHECK_EQ(arr_def.Size(), 0);
+
+	const int Size = 5;
+	DynArr arr_s(Size);
+	CHECK_EQ(arr_s.Size(), Size);
+}
+
+TEST_CASE("dynarr op[]") {
+	const int Size = 5;
+	DynArr arr(Size);
+	DynArr b = arr;
+	CHECK_EQ(arr[0], doctest::Approx(0.0f));
+	CHECK_EQ(arr[arr.Size() - 1], doctest::Approx(0.0f));
+	REQUIRE(arr[0] == doctest::Approx(0.0f));
+	CHECK_EQ(arr[0], b[0]);
+	CHECK_THROWS(arr[20]);
+	arr[3] = 2;
+	CHECK(arr[0] == b[0]);
+}
+
+TEST_CASE("dynarr res") {
+	const int Size = 5;
+	DynArr arr(Size);
+	arr.Resize(12);
+	CHECK_NOTHROW(arr[11]);
+	arr.Resize(6);
+	CHECK_THROWS(arr[11]);
+	arr[4] = 5;
+	CHECK_EQ(arr[4], 5);
+	CHECK(arr[5] == 0.0f);
 }

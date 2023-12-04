@@ -20,9 +20,9 @@ int main() {
 			}
 		}
 		int ans(0);
-		for (int j = 0; j < a.size(); j++) {
+		for (int j = 0; j < a.Size(); j++) {
 			int mn(1000000000);
-			for (int k = 0; k < g.size(); k++) {
+			for (int k = 0; k < g.Size(); k++) {
 				if (g[k] >= a[j]) {
 					mn = std::min(mn, g[k] - a[j]);
 				}
