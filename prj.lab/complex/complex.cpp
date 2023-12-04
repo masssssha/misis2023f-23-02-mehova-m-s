@@ -70,8 +70,16 @@ Complex& Complex::operator*=(const Complex& x) {
 Complex& Complex::operator/=(const Complex& x) {
     double re1((*this).re);
     double im1((*this).im);
-    re = (re1 * x.re + im1 * x.im) / (x.re * x.re + x.im * x.im);
-    im = (im1 * x.re - re1 * x.im) / (x.re * x.re + x.im * x.im);
+    try {
+      if (x.re * x.re + x.im * x.im == 0) {
+        throw std::invalid_argument("Zero denumenator in Complex");
+      }
+      re = (re1 * x.re + im1 * x.im) / (x.re * x.re + x.im * x.im);
+      im = (im1 * x.re - re1 * x.im) / (x.re * x.re + x.im * x.im);
+    }
+    catch (std::invalid_argument) {
+      std::cout << "Zero denumenator in Complex";
+    }
     return *this;
 }
 

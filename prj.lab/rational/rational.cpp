@@ -14,7 +14,7 @@ Rational::Rational(const int& first, const int& second) {
 		den_ = -second / nod(first, -second);
 	}
 	if (second == 0) {
-		throw std::invalid_argument("Zero denumenator in Rational ctor");
+			throw std::invalid_argument("Zero denumenator in Rational ctor");
 	}
 }
 Rational::Rational(const int& first) {
@@ -70,10 +70,11 @@ Rational& Rational::operator*=(const Rational& x) {
 }
 
 Rational& Rational::operator/=(const Rational& x) {
-	if (x.num_ != 0) {
-		num_ *= x.den_;
-		den_ *= x.num_;
+	if (x.num_ == 0) {
+		throw std::invalid_argument("Zero denumenator in Rational ctor");
 	}
+	num_ *= x.den_;
+	den_ *= x.num_;
 	norm();
 	return *this;
 }

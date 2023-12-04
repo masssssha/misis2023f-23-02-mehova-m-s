@@ -17,6 +17,7 @@ struct Complex {
     Complex& operator-=(const Complex& x);
     Complex& operator*=(const Complex& x);
     Complex& operator/=(const Complex& x);
+    Complex operator-() const noexcept { return Complex(-re, -im); }
     std::ostream& writeTo(std::ostream& ostrm) const;
     std::istream& ReadFrom(std::istream& istrm);
     static const char leftBrace{ '{' };

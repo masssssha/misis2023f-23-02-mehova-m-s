@@ -31,40 +31,22 @@ void TestMul(Complex x, Complex y, double z) {
 
 void TestDiv(Complex x, Complex y, double z) {
     std::cout << x << " /= " << y << ": ";
-    if (y == Complex(0)) {
-        std::cout << "Error, denominator can't be zero" << std::endl;
-    }
-    else {
-        x /= y;
-        std::cout << x << std::endl;
-    }
+    x /= y;
+    std::cout << x << std::endl;
     std::cout << x << " / " << y << " = ";
-    if (y == Complex(0)) {
-        std::cout << "Error, denominator can't be zero" << std::endl;
-    }
-    else {
-        std::cout << (x / y) << std::endl;
-    }
+    std::cout << (x / y) << std::endl;
     std::cout << y << " / " << z << " = ";
-    if (z == 0) {
-        std::cout << "Error, denominator can't be zero" << std::endl;
-    }
-    else {
-        std::cout << (y / z) << std::endl;
-    }
+    std::cout << (y / z) << std::endl;
     std::cout << z << " / " << x << " = ";
-    if (x == Complex(0)) {
-        std::cout << "Error, denominator can't be zero" << std::endl;
-    }
-    else {
-        std::cout << (z / x) << std::endl;
-    }
+    std::cout << (z / x) << std::endl;
 }
 
 int main()
 {
     Complex x(1, 8);
-    Complex y(1, 0);
+    Complex y(0, 1);
+    Complex g = -y;
+    std::cout << g << std::endl;
     double z = 2.0;
     std::cout << "Addition test: " << std::endl;
     TestAdd(x, y, z);

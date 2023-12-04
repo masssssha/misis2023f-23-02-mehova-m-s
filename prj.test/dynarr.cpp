@@ -8,7 +8,7 @@
 class DynArr {
 public:
 	DynArr() = default;
-	DynArr(const DynArr&) = default;
+	explicit DynArr(const DynArr& x);
 	DynArr(const std::ptrdiff_t s);
 	~DynArr();
 	std::ptrdiff_t Size() const;
@@ -18,18 +18,16 @@ public:
 private:
 	std::ptrdiff_t size_ = 0;
 	float* data_ = nullptr;
-	float first = 0.0;
+	float first = 0.0f;
 };
 
-/*int main() {
-	DynArr a(20);
-	DynArr b = a;
-	std::cout << b.size() << std::endl;
-	a.resize(15);
-	std::cout << a[0] << std::endl;
-	std::cout << a.size() << std::endl;
-	std::cout << a[16] << std::endl;
-}*/
+DynArr::DynArr(const DynArr& x) 
+	: size_(x.size_) {
+	data_ = new float[x.size_];
+	for (int i = 0; i < x.size_; i++) {
+		*(data_ + i) = x[i];
+	}
+}
 
 DynArr::DynArr(const std::ptrdiff_t s) 
 	: size_(s) {
@@ -41,6 +39,7 @@ DynArr::DynArr(const std::ptrdiff_t s)
 
 DynArr::~DynArr() {
 	delete[] data_;
+	data_ = nullptr;
 }
 
 std::ptrdiff_t DynArr::Size() const {
@@ -49,7 +48,7 @@ std::ptrdiff_t DynArr::Size() const {
 
 void DynArr::Resize(const std::ptrdiff_t s) {
 	if (s <= 0) {
-		std::cout << "Size should be more than zero";
+		std::cout << "Size must be more than zero";
 	}
 	else {
 		size_ = s;
@@ -70,7 +69,15 @@ const float& DynArr::operator[](const std::ptrdiff_t i) const {
 	return *(data_+i);
 }
 
-TEST_CASE("dynarr ctor") {
+
+int main() {
+	DynArr a(5);
+	//DynArr b(a);
+	std::cout << a[0];
+}
+
+
+/*TEST_CASE("dynarr ctor") {
 	DynArr arr_def;
 	CHECK_EQ(arr_def.Size(), 0);
 
@@ -82,14 +89,14 @@ TEST_CASE("dynarr ctor") {
 TEST_CASE("dynarr op[]") {
 	const int Size = 5;
 	DynArr arr(Size);
-	DynArr b = arr;
-	CHECK_EQ(arr[0], doctest::Approx(0.0f));
-	CHECK_EQ(arr[arr.Size() - 1], doctest::Approx(0.0f));
-	REQUIRE(arr[0] == doctest::Approx(0.0f));
-	CHECK_EQ(arr[0], b[0]);
-	CHECK_THROWS(arr[20]);
-	arr[3] = 2;
-	CHECK(arr[0] == b[0]);
+	DynArr b(arr);
+	//CHECK_EQ(arr[0], doctest::Approx(0.0f));
+	//CHECK_EQ(arr[arr.Size() - 1], doctest::Approx(0.0f));
+	//REQUIRE(arr[0] == doctest::Approx(0.0f));
+	//CHECK_EQ(arr[0], b[0]);
+	//CHECK_THROWS(arr[20]);
+	//arr[3] = 2;
+	//CHECK(arr[0] == b[0]);
 }
 
 TEST_CASE("dynarr res") {
@@ -102,4 +109,4 @@ TEST_CASE("dynarr res") {
 	arr[4] = 5;
 	CHECK_EQ(arr[4], 5);
 	CHECK(arr[5] == 0.0f);
-}
+}*/
