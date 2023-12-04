@@ -95,6 +95,7 @@ TEST_CASE("dynarr ctor") {
 	const int Size = 5;
 	DynArr arr_s(Size);
 	CHECK_EQ(arr_s.Size(), Size);
+	CHECK_NOTHROW(arr_s[arr_s.Size() - 1]);
 }
 
 
@@ -102,22 +103,25 @@ TEST_CASE("dynarr ctor") {
 TEST_CASE("dynarr op[]") {
 	const int Size = 5;
 	DynArr arr(Size);
-	DynArr b(arr);
 	CHECK_EQ(arr[0], doctest::Approx(0.0f));
 	CHECK_EQ(arr[arr.Size() - 1], doctest::Approx(0.0f));
 	REQUIRE(arr[3] == doctest::Approx(0.0f));
+	CHECK_THROWS(arr[arr.Size() + 1]);
+	DynArr b(arr);
 	CHECK_EQ(arr[0], b[0]);
-	CHECK_THROWS(arr[20]);
 	arr[3] = 2;
 	CHECK(arr[3] != b[3]);
+	CHECK_NOTHROW(b[arr.Size() - 1]);
 }
 
 TEST_CASE("dynarr res") {
 	const int Size = 5;
 	DynArr arr(Size);
+	arr[Size - 1] = 12;
 	arr.Resize(12);
 	CHECK_NOTHROW(arr[11]);
-	CHECK(arr[10] == 0);
+	CHECK(arr[Size + 1] == 0);
+	CHECK(arr[Size - 1] == 12);
 	arr.Resize(6);
 	CHECK_THROWS(arr[11]);
 	arr[4] = 5;
