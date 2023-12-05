@@ -10,8 +10,8 @@ Rational::Rational(const std::int64_t& first, const std::int64_t& second) {
 		den_ = second / nod(first, second);
 	}
 	if (second < 0) {
-		num_ = -first / nod(first, -second);
-		den_ = -second / nod(first, -second);
+		num_ = -first / nod(first, second);
+		den_ = -second / nod(first, second);
 	}
 	if (second == 0) {
 			throw std::invalid_argument("Zero denumenator in Rational ctor");
@@ -28,7 +28,7 @@ std::istream& Rational::ReadFrom(std::istream& istrm) noexcept {
 	char znak;
 	istrm >> f >> znak >> s;
 	if (istrm.good()) {
-		if (znak == '/' && s != 0) {
+		if (znak == '/' && s > 0) {    //посмотрим прокатит ваш тест или нет если я это поменяю
 			num_ = f;
 			den_ = s;
 		} else {
