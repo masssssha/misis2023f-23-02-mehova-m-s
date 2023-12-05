@@ -48,6 +48,10 @@ int main()
     Complex g = -y;
     std::cout << g << std::endl;
     double z = 2.0;
+    Complex pu = y + 0.1;
+    if (pu == y) {
+      std::cout << "YES" << std::endl;
+    }
     std::cout << "Addition test: " << std::endl;
     TestAdd(x, y, z);
     z = 5.0;

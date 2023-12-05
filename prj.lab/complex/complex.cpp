@@ -94,7 +94,7 @@ std::istream& Complex::ReadFrom(std::istream& istrm) {
   return istrm;
 }
 
-std::ostream& Complex::writeTo(std::ostream& ostrm) const {
+std::ostream& Complex::WriteTo(std::ostream& ostrm) const {
     ostrm << leftBrace << re << separator << im << rightBrace;
     return ostrm;
 }

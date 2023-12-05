@@ -10,7 +10,9 @@ struct Complex {
     explicit Complex(const double real);
     Complex() = default;
     ~Complex() = default;
-    bool operator==(const Complex& x) const { return (re == x.re) && (im == x.im); }
+    bool operator==(const Complex& x) const { 
+      return ((re - x.re <= 2 * std::numeric_limits<double>::epsilon()) && (im - x.im <= 2 * std::numeric_limits<double>::epsilon()));
+    }
     bool operator!=(const Complex& x) const { return !operator==(x); }
     Complex& operator=(const Complex&) = default;
     Complex& operator+=(const Complex& x);
@@ -33,7 +35,7 @@ struct Complex {
         }
       }
     }
-    std::ostream& writeTo(std::ostream& ostrm) const;
+    std::ostream& WriteTo(std::ostream& ostrm) const;
     std::istream& ReadFrom(std::istream& istrm);
     static const char leftBrace{ '{' };
     static const char separator{ ',' };
@@ -43,7 +45,7 @@ inline std::istream& operator>>(std::istream& istrm, Complex& x) {
   return x.ReadFrom(istrm);
 }
 inline std::ostream& operator<<(std::ostream& ostrm, const Complex& rhs) {
-    return rhs.writeTo(ostrm);
+    return rhs.WriteTo(ostrm);
 }
 Complex operator+(const Complex& x, const Complex& y);
 Complex operator+(const Complex& x, const double& y);
