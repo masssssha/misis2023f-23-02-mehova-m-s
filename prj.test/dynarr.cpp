@@ -33,7 +33,7 @@ DynArr::DynArr(const DynArr& x)
 DynArr::DynArr(const std::ptrdiff_t s) 
 	: size_(s) {
 	if (s <= 0) {
-		throw std::out_of_range("Index out of range");
+		throw std::invalid_argument("Size must be a positive number");
 	}
 	data_ = new float[s] {0.0f};
 }
@@ -51,7 +51,7 @@ std::ptrdiff_t DynArr::Size() const {
 
 void DynArr::Resize(const std::ptrdiff_t s) {
 	if (s <= 0) {
-		throw std::out_of_range("Index out of range");
+		throw std::invalid_argument("Size must be a positive number");
 	}
 	if (s <= size_) {
 		size_ = s;
