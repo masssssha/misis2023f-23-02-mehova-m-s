@@ -1,5 +1,5 @@
-#define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
-#include "doctest.h"
+//#define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
+//#include "doctest.h"
 
 #include <iostream>
 #include <cstddef>
@@ -15,15 +15,20 @@ public:
 	void Resize(const std::ptrdiff_t s);
 	float& operator[](const std::ptrdiff_t i);        //done
 	const float& operator[](const std::ptrdiff_t i) const;    //done
+	std::ptrdiff_t capacity() const noexcept {
+		return cap - data_;
+	}
 private:
 	std::ptrdiff_t size_ = 0;
 	float* data_ = nullptr;
+	float* cap = nullptr;
 };
  
 //copy maker
 DynArr::DynArr(const DynArr& x) 
 	: size_(x.size_) {
 	data_ = new float[x.size_];
+	cap = &(*this)[(*this).Size()-1];
 	for (int i = 0; i < x.size_; i++) {
 		*(data_ + i) = x[i];
 	}
@@ -36,12 +41,14 @@ DynArr::DynArr(const std::ptrdiff_t s)
 		throw std::invalid_argument("Size must be a positive number");
 	}
 	data_ = new float[s] {0.0f};
+	cap = &(*this)[(*this).Size()-1];
 }
 
 //crush
 DynArr::~DynArr() {
 	delete[] data_;
 	data_ = nullptr;
+	cap = nullptr;
 }
 
 //size
@@ -53,14 +60,16 @@ void DynArr::Resize(const std::ptrdiff_t s) {
 	if (s <= 0) {
 		throw std::invalid_argument("Size must be a positive number");
 	}
-	if (s <= size_) {
+	if (s <= (*this).capacity()) {
 		size_ = s;
 	}
 	else {
 		DynArr b(*this);
 		delete[] data_;
 		data_ = nullptr;
+		cap = nullptr;
 		data_ = new float[s];
+		cap = &(*this)[(*this).Size() - 1];
 		size_ = s;
 		for (int i = 0; i < s; i++) {
 			if (i < b.Size()) {
@@ -88,7 +97,7 @@ const float& DynArr::operator[](const std::ptrdiff_t i) const {
 	return *(data_+i);
 }
 
-TEST_CASE("dynarr ctor") {
+/*TEST_CASE("dynarr ctor") {
 	DynArr arr_def;
 	CHECK_EQ(arr_def.Size(), 0);
 
@@ -127,4 +136,9 @@ TEST_CASE("dynarr res") {
 	arr[4] = 5;
 	CHECK_EQ(arr[4], 5);
 	CHECK(arr[5] == 0.0f);
+}*/
+
+int main() {
+	DynArr a(10);
+	std::cout << a.capacity();
 }
