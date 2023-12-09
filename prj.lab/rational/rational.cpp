@@ -17,10 +17,7 @@ Rational::Rational(const std::int64_t& first, const std::int64_t& second) {
 			throw std::invalid_argument("Zero denumenator in Rational ctor");
 	}
 }
-Rational::Rational(const std::int64_t& first) {
-	num_ = first;
-	den_ = 1;
-}
+Rational::Rational(const std::int64_t& first) : num_(first) {}
 
 //ввод
 std::istream& Rational::ReadFrom(std::istream& istrm) noexcept {
@@ -40,7 +37,7 @@ std::istream& Rational::ReadFrom(std::istream& istrm) noexcept {
 
 //вывод
 std::ostream& Rational::WriteTo(std::ostream& ostrm) const noexcept {
-	ostrm << num_ << sign << den_;
+	ostrm << num_ << '/' << den_;
 	return ostrm;
 }
 
@@ -53,6 +50,11 @@ Rational& Rational::operator+=(const Rational& x) noexcept {
 	norm();
 	return *this;
 }
+
+Rational& Rational::operator+=(const int64_t x) noexcept {
+	return operator+=(Rational(x));
+}
+
 Rational& Rational::operator-=(const Rational &x) noexcept {
 	std::int64_t num_1 = num_;
 	std::int64_t den1 = den_;
@@ -62,11 +64,19 @@ Rational& Rational::operator-=(const Rational &x) noexcept {
 	return *this;
 }
 
+Rational& Rational::operator-=(const int64_t x) noexcept {
+	return operator-=(Rational(x));
+}
+
 Rational& Rational::operator*=(const Rational& x) noexcept {
 	num_ *= x.num_;
 	den_ *= x.den_;
 	norm();
 	return *this;
+}
+
+Rational& Rational::operator*=(const int64_t x) noexcept {
+	return operator*=(Rational(x));
 }
 
 Rational& Rational::operator/=(const Rational& x) {
@@ -79,14 +89,18 @@ Rational& Rational::operator/=(const Rational& x) {
 	return *this;
 }
 
+Rational& Rational::operator/=(const int64_t x) {
+	return operator/=(Rational(x));
+}
+
 //operator r + r, d + r, r + d
 Rational operator+(const Rational& x, const Rational& y) noexcept {
 	return Rational(x) += y;
 }
-Rational operator+(const Rational& x, const std::int64_t& y) noexcept {
+Rational operator+(const Rational& x, const int64_t y) noexcept {
 	return Rational(x) += Rational(y);
 }
-Rational operator+(const std::int64_t& x, const Rational& y) noexcept {
+Rational operator+(const int64_t x, const Rational& y) noexcept {
 	return Rational(x) += Rational(y);
 }
 
@@ -94,10 +108,10 @@ Rational operator+(const std::int64_t& x, const Rational& y) noexcept {
 Rational operator-(const Rational& x, const Rational& y) noexcept {
 	return Rational(x) -= y;
 }
-Rational operator-(const Rational& x, const std::int64_t& y) noexcept {
+Rational operator-(const Rational& x, const int64_t y) noexcept {
 	return Rational(x) -= Rational(y);
 }
-Rational operator-(const std::int64_t& x, const Rational& y) noexcept {
+Rational operator-(const int64_t x, const Rational& y) noexcept {
 	return Rational(x) -= Rational(y);
 }
 
@@ -105,10 +119,10 @@ Rational operator-(const std::int64_t& x, const Rational& y) noexcept {
 Rational operator*(const Rational& x, const Rational& y) noexcept {
 	return Rational(x) *= y;
 }
-Rational operator*(const Rational& x, const std::int64_t& y) noexcept {
+Rational operator*(const Rational& x, const int64_t y) noexcept {
 	return Rational(x) *= Rational(y);
 }
-Rational operator*(const std::int64_t& x, const Rational& y) noexcept {
+Rational operator*(const int64_t x, const Rational& y) noexcept {
 	return Rational(x) *= Rational(y);
 }
 
@@ -117,9 +131,9 @@ Rational operator*(const std::int64_t& x, const Rational& y) noexcept {
 Rational operator/(const Rational& x, const Rational& y) {
 	return Rational(x) /= y;
 }
-Rational operator/(const Rational& x, const std::int64_t& y) {
+Rational operator/(const Rational& x, const int64_t y) {
 	return Rational(x) /= Rational(y);
 }
-Rational operator/(const std::int64_t& x, const Rational& y) {
+Rational operator/(const int64_t x, const Rational& y) {
 	return Rational(x) /= Rational(y);
 }

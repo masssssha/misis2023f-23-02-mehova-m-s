@@ -1,5 +1,4 @@
 #include <iostream>
-#include <sstream>
 #include <complex/complex.hpp>
 
 void TestAdd(Complex x, Complex y, double z) {
@@ -43,8 +42,8 @@ void TestDiv(Complex x, Complex y, double z) {
 
 int main()
 {
-    Complex x(1, 8);
-    Complex y(0, -1);
+    Complex x(1.0, 8.0);
+    Complex y(0.0, -1.0);
     Complex g = -y;
     std::cout << g << std::endl;
     double z = 2.0;
@@ -66,4 +65,5 @@ int main()
     std::cout << std::endl;
     std::cout << "Division test: " << std::endl;
     TestDiv(x, y, z);
+    return 0;
 }

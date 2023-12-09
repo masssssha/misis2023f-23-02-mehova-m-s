@@ -62,7 +62,6 @@ TEST_CASE("rational ctor") {
   CHECK(1 == r_minus_int.den());
 
   CHECK_THROWS(Rational(1, 0));
-  CHECK_THROWS(void(Rational(1, 0)));
 }
 
 TEST_CASE("rational gcd") {

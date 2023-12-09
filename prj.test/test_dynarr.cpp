@@ -16,23 +16,22 @@ public:
 	float& operator[](const std::ptrdiff_t i);        //done
 	const float& operator[](const std::ptrdiff_t i) const;    //done
 	//std::ptrdiff_t capacity() const noexcept {
-	//	return cap - data_;
+	//	return (capacity_ - data_);
 	//}
 private:
 	std::ptrdiff_t size_ = 0;
+	float* capacity_ = nullptr;
 	float* data_ = nullptr;
-	//float* first_free = nullptr;
-	//float* cap = nullptr;
 };
  
 //copy maker
 DynArr::DynArr(const DynArr& x) 
 	: size_(x.size_) {
 	data_ = new float[x.size_];
-	//first_free = &(*this)[(*this).Size()-1] + 1;
 	for (int i = 0; i < x.size_; i++) {
 		*(data_ + i) = x[i];
 	}
+	capacity_ = data_ + size_ + 1;
 }
 
 //size maker
@@ -42,14 +41,13 @@ DynArr::DynArr(const std::ptrdiff_t s)
 		throw std::invalid_argument("Size must be a positive number");
 	}
 	data_ = new float[s] {0.0f};
-	//first_free = &(*this)[(*this).Size()-1] + 1;
+	capacity_ = data_ + size_ + 1;
 }
 
 //crush
 DynArr::~DynArr() {
 	delete[] data_;
 	data_ = nullptr;
-	//first_free = nullptr;
 }
 
 //size
@@ -62,25 +60,28 @@ void DynArr::Resize(const std::ptrdiff_t s) {
 		throw std::invalid_argument("Size must be a positive number");
 	}
 	if (s <= size_) {
+		if (s > size_) {
+			for (std::ptrdiff_t i = size_; i < s; i++) {
+				*(data_ + i) = 0.0f;
+			}
+		}
 		size_ = s;
-		//first_free = &(*this)[size_ - 1] + 1;
 	}
 	else {
 		DynArr b(*this);
 		delete[] data_;
 		data_ = nullptr;
-		//first_free = nullptr;
 		data_ = new float[s];
-		//first_free = &(*this)[(*this).Size() - 1]+1;
 		size_ = s;
 		for (int i = 0; i < s; i++) {
 			if (i < b.Size()) {
 				*(data_ + i) = b[i];
 			}
 			else {
-				*(data_ + i) = 0;
+				*(data_ + i) = 0.0f;
 			}
 		}
+		capacity_ = (data_ + size_ + 1);
 	}
 }
 
@@ -96,7 +97,7 @@ const float& DynArr::operator[](const std::ptrdiff_t i) const {
 	if (i < 0 || i >= size_) {
 		throw std::out_of_range("Index out of range");
 	}
-	return *(data_+i);
+	return *(data_ + i);
 }
 
 TEST_CASE("dynarr ctor") {

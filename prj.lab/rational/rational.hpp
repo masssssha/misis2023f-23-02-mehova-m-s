@@ -29,7 +29,10 @@ class Rational {
 		Rational& operator-=(const Rational& x) noexcept;
 		Rational& operator*=(const Rational& x) noexcept;
 		Rational& operator/=(const Rational& x);
-		static const char sign{ '/' };
+		Rational& operator+=(const int64_t x) noexcept;
+		Rational& operator-=(const int64_t x) noexcept;
+		Rational& operator*=(const int64_t x) noexcept;
+		Rational& operator/=(const int64_t x);
 	private:
 		std::int64_t num_ = 0;
 		std::int64_t den_ = 1;
@@ -56,17 +59,17 @@ class Rational {
 };
 
 Rational operator+(const Rational& x, const Rational& y) noexcept;
-Rational operator+(const Rational& x, const std::int64_t& y) noexcept;
-Rational operator+(const std::int64_t& x, const Rational& y) noexcept;
+Rational operator+(const Rational& x, const int64_t y) noexcept;
+Rational operator+(const int64_t x, const Rational& y) noexcept;
 Rational operator-(const Rational& x, const Rational& y) noexcept;
-Rational operator-(const Rational& x, const std::int64_t& y) noexcept;
-Rational operator-(const std::int64_t& x, const Rational& y) noexcept;
+Rational operator-(const Rational& x, const int64_t y) noexcept;
+Rational operator-(const int64_t x, const Rational& y) noexcept;
 Rational operator*(const Rational& x, const Rational& y) noexcept;
-Rational operator*(const Rational& x, const std::int64_t& y) noexcept;
-Rational operator*(const std::int64_t& x, const Rational& y) noexcept;
+Rational operator*(const Rational& x, const int64_t y) noexcept;
+Rational operator*(const int64_t x, const Rational& y) noexcept;
 Rational operator/(const Rational& x, const Rational& y);
-Rational operator/(const Rational& x, const std::int64_t& y);
-Rational operator/(const std::int64_t& x, const Rational& y);
+Rational operator/(const Rational& x, const int64_t y);
+Rational operator/(const int64_t x, const Rational& y);
 
 inline std::istream& operator>>(std::istream& istrm, Rational& x) noexcept {
 	return x.ReadFrom(istrm);
