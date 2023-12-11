@@ -61,6 +61,15 @@ TEST_CASE("rational ctor") {
   CHECK(-3 == r_minus_int.num());
   CHECK(1 == r_minus_int.den());
 
+  Rational x(0, -5);
+  Rational y = -x;
+  CHECK(x == Rational(0, 5));
+  CHECK(y == Rational(0, 5));
+
+  Rational z(-2, -2);
+  Rational p = -z;
+  CHECK(p == Rational(-1, 1));
+
   CHECK_THROWS(Rational(1, 0));
 }
 

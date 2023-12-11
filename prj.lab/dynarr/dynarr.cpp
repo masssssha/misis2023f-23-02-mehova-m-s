@@ -45,20 +45,19 @@ void DynArr::Resize(const std::ptrdiff_t s) {
 		size_ = s;
 	}
 	else {
-		DynArr b(*this);
-		delete[] data_;
-		data_ = nullptr;
-		data_ = new float[s];
-		size_ = s;
+		float* newdata_ = new float[s];
 		for (int i = 0; i < s; i++) {
-			if (i < b.Size()) {
-				*(data_ + i) = b[i];
+			if (i < (*this).Size()) {
+				*(newdata_ + i) = (*this)[i];
 			}
 			else {
-				*(data_ + i) = 0.0f;
+				*(newdata_ + i) = 0.0f;
 			}
 		}
-		capacity_ = size_;
+		delete data_;
+		data_ = newdata_;
+		size_ = s;
+		capacity_ = s;
 	}
 }
 

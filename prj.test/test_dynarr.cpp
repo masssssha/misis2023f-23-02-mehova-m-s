@@ -24,7 +24,7 @@ TEST_CASE("dynarr op[]") {
 	CHECK_THROWS(arr[arr.Size() + 1]);
 	DynArr b(arr);
 	CHECK_EQ(arr[0], b[0]);
-	arr[3] = 2;
+	arr[3] = 2.0f;
 	CHECK(arr[3] != b[3]);
 	CHECK_NOTHROW(b[arr.Size() - 1]);
 }
@@ -35,11 +35,25 @@ TEST_CASE("dynarr res") {
 	arr[Size - 1] = 12;
 	arr.Resize(12);
 	CHECK_NOTHROW(arr[11]);
-	CHECK(arr[Size + 1] == 0);
-	CHECK(arr[Size - 1] == 12);
+	CHECK(arr[Size + 1] == 0.0f);
+	CHECK(arr[Size - 1] == 12.0f);
 	arr.Resize(6);
 	CHECK_THROWS(arr[11]);
 	arr[4] = 5;
-	CHECK_EQ(arr[4], 5);
+	CHECK_EQ(arr[4], 5.0f);
 	CHECK(arr[5] == 0.0f);
+}
+
+TEST_CASE("dynarr =") {
+	DynArr a(10);
+	for (int i = 0; i < a.Size(); i++) {
+		a[i] = i;
+	}
+	DynArr b;
+	b = a;
+	CHECK(b[8] == a[8]);
+	for (int i = 0; i < b.Size(); i++) {
+		b[i] += 10;
+	}
+	CHECK(b[5] != a[5]);
 }

@@ -12,12 +12,12 @@ struct Complex {
   ~Complex() = default;
   [[nodiscard]] Complex operator-() const noexcept;
 
-  //! вещественных и мнимых частей не превосходит eps = 2 * std::numeric_limits<double>::epsilon()
   [[nodiscard]] bool operator==(const Complex& x) const noexcept {
     return ((std::abs(re - x.re) <= 2 * std::numeric_limits<double>::epsilon()) && (std::abs(im - x.im) <= 2 * std::numeric_limits<double>::epsilon()));
   }
-  [[nodiscard]] bool operator!=(const Complex& x) const noexcept;
-
+  [[nodiscard]] bool operator!=(const Complex& x) const noexcept {
+    return !(operator==(x));
+  }
   Complex& operator+=(const Complex& x) noexcept;
   Complex& operator+=(const double x) noexcept;
   Complex& operator-=(const Complex& x) noexcept;

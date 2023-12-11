@@ -1,5 +1,6 @@
 #include <iostream>
 #include <sstream>
+#include <limits>
 #include <complex/complex.hpp>
 Complex Complex::operator-() const noexcept {
   return Complex(-re, -im);

@@ -13,6 +13,12 @@ public:
 	~DynArr();                          //done
 	std::ptrdiff_t Size() const;        //done
 	void Resize(const std::ptrdiff_t s);
+	void operator=(const DynArr& x) {
+		(*this).Resize(x.Size());
+		for (int i = 0; i < x.Size(); i++) {
+			*(data_ + i) = x[i];
+		}
+	}
 	float& operator[](const std::ptrdiff_t i);        //done
 	const float& operator[](const std::ptrdiff_t i) const;    //done
 	std::ptrdiff_t capacity() const noexcept {

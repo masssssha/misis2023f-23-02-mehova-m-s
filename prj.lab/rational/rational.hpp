@@ -39,6 +39,9 @@ class Rational {
 		std::int64_t nod(const std::int64_t& x, const std::int64_t& y) {
 			std::int64_t a = std::max(std::abs(x), std::abs(y));
 			std::int64_t b = std::min(std::abs(x), std::abs(y));
+			if (b == 0) {
+				return 1;
+			}
 			while (a != b) {
 				a -= b;
 				std::int64_t temp = a;
