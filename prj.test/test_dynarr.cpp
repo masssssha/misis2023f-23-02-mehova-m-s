@@ -13,8 +13,6 @@ TEST_CASE("dynarr ctor") {
 	CHECK_NOTHROW(arr_s[arr_s.Size() - 1]);
 }
 
-
-
 TEST_CASE("dynarr op[]") {
 	const int Size = 5;
 	DynArr arr(Size);
