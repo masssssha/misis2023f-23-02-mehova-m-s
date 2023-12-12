@@ -13,9 +13,6 @@ Rational::Rational(const std::int64_t& first, const std::int64_t& second) {
 		num_ = -first / nod(first, second);
 		den_ = -second / nod(first, second);
 	}
-	if (first == 0) {
-		num_ = 0;
-	}
 	if (second == 0) {
 			throw std::invalid_argument("Zero denumenator in Rational ctor");
 	}
