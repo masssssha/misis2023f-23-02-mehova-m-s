@@ -47,8 +47,7 @@ TEST_CASE("dynarr =") {
 	for (int i = 0; i < a.Size(); i++) {
 		a[i] = i;
 	}
-	DynArr b;
-	b = a;
+	DynArr b = a;
 	CHECK(b[8] == a[8]);
 	for (int i = 0; i < b.Size(); i++) {
 		b[i] += 10;

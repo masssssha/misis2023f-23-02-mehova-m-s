@@ -5,7 +5,7 @@ DynArr::DynArr(const DynArr& x)
 	: size_(x.size_) {
 	data_ = new float[x.size_];
 	for (int i = 0; i < x.size_; i++) {
-		*(data_ + i) = x[i];
+		*(data_ + i) = *(x.data_ + i);
 	}
 	capacity_ = size_;
 }
@@ -48,13 +48,13 @@ void DynArr::Resize(const std::ptrdiff_t s) {
 		float* newdata_ = new float[s];
 		for (int i = 0; i < s; i++) {
 			if (i < (*this).Size()) {
-				*(newdata_ + i) = (*this)[i];
+				*(newdata_ + i) = *(data_ + i);
 			}
 			else {
 				*(newdata_ + i) = 0.0f;
 			}
 		}
-		delete data_;
+		delete[] data_;
 		data_ = newdata_;
 		size_ = s;
 		capacity_ = s;

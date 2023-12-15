@@ -8,16 +8,19 @@
 class DynArr {
 public:
 	DynArr() = default;
-	explicit DynArr(const DynArr& x);    //done
+	DynArr(const DynArr& x);    //done
 	DynArr(const std::ptrdiff_t s);     //done
 	~DynArr();                          //done
 	std::ptrdiff_t Size() const;        //done
 	void Resize(const std::ptrdiff_t s);
-	void operator=(const DynArr& x) {
-		(*this).Resize(x.Size());
-		for (int i = 0; i < x.Size(); i++) {
-			*(data_ + i) = x[i];
+	DynArr& operator=(const DynArr& x) {
+		if (this != &x) {
+			Resize(x.Size());
+			for (int i = 0; i < x.Size(); i++) {
+				*(data_ + i) = x[i];
+			}
 		}
+		return *this;
 	}
 	float& operator[](const std::ptrdiff_t i);        //done
 	const float& operator[](const std::ptrdiff_t i) const;    //done

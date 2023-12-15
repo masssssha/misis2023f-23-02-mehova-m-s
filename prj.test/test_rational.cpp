@@ -63,8 +63,8 @@ TEST_CASE("rational ctor") {
 
   Rational x(0, -5);
   Rational y = -x;
-  CHECK(x == Rational(0, 5));
-  CHECK(y == Rational(0, 5));
+  CHECK(x == Rational(0, 1));
+  CHECK(y == Rational(0, 1));
 
   Rational z(-2, -2);
   Rational p = -z;
