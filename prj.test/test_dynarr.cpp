@@ -53,4 +53,8 @@ TEST_CASE("dynarr =") {
 		b[i] += 10;
 	}
 	CHECK(b[5] != a[5]);
+	a = b;
+	CHECK(b[5] == a[5]);
+	a[2] = 0;
+	CHECK(a[2] != b[5]);
 }
