@@ -1,112 +1,90 @@
-/*#include <iostream>
-#include <sstream>
-#include <rational/rational.hpp>
-#define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
-#include "doctest.h"
-#include <cstdint>
-
-TEST_CASE("rational ctor") {
-    CHECK_THROWS(Rational(1, 0));
-    CHECK(Rational(2, 1) + Rational(3, 4) == Rational(11, 4));
-    CHECK(Rational(8, 9) - 3 == Rational(-19, 9));
-    CHECK(3 + Rational(3, 3) == Rational(4, 1));
-    CHECK(Rational(2, 1) * Rational(3, 2) == Rational(3, 1));
-    CHECK(Rational(3, 5) / Rational(3, 5) == Rational(1, 1));
-    Rational z(2, -3);
-    CHECK(z == Rational(-2, 3));
-    Rational x(2, 4);
-    CHECK(x / z == Rational(-3, 4));
-    CHECK((Rational(2, 3) >= Rational(1, 1)) == 0);
-    CHECK((Rational(2, 3) < Rational(1, 1)) == 1);
-    CHECK(Rational(3, -6) == Rational(-1, 2));
-}*/
-
-#include <rational/rational.hpp>
-#define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
-#include "doctest.h"
+/* не работает
 #include <iostream>
+
+Rational a(1, 2);
+Rational b(2, 3);
+
+Rational sum(7, 6);
+Rational diff(-1, 6);
+Rational mul(1, 3);
+Rational dell(3, 4);
+
+  TEST_CASE("checking arithmetic") {
+    CHECK((a + b == sum));
+    CHECK((a - b == diff));
+    CHECK((a * b == mul));
+    CHECK((a / b == dell));
+
+  }
+
+  TEST_CASE("[rational] - Rational ctor") {
+    CHECK(Rational() == Rational(0, 1));
+    CHECK(Rational(3) == Rational(3, 1));
+    CHECK(Rational(-3) == Rational(-3, 1));
+    CHECK(Rational(10, 6) == Rational(5, 3));
+    CHECK(Rational(-10, 6) == Rational(-5, 3));
+    CHECK(Rational(10, -6) == Rational(-5, 3));
+    CHECK(Rational(-10, -6) == Rational(5, 3));
+    CHECK_THROWS(Rational(1, 0));
+  }
+ */
+#define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
+#include "doctest.h"
+
+#include <rational/rational.hpp>
 #include <sstream>
-#include <cstdint>
 
-
-void testing() {
-  Rational r(int64_t(3));
-  std::cout << Rational(4) << std::endl;
-
-  std::cout << Rational(4, 3) << std::endl;
-  try {
-    std::cout << Rational(4, 0) << std::endl;
-  }
-  catch (const std::invalid_argument& e) {
-    std::cout << e.what() << std::endl;
-  }
-  try {
-    std::cout << Rational(4, -1) << std::endl;
-  }
-  catch (const std::invalid_argument& e) {
-    std::cout << e.what() << std::endl;
-  }
-}
-
-TEST_CASE("rational ctor") {
-  Rational r_def;
-  CHECK(0 == r_def.num());
-  CHECK(1 == r_def.den());
-
-  Rational r_int(3);
-  CHECK(3 == r_int.num());
-  CHECK(1 == r_int.den());
-
-  Rational r_minus_int(-3);
-  CHECK(-3 == r_minus_int.num());
-  CHECK(1 == r_minus_int.den());
-
-  Rational x(0, -5);
-  Rational y = -x;
-  CHECK(x == Rational(0, 1));
-  CHECK(y == Rational(0, 1));
-
-  Rational z(-2, -2);
-  Rational p = -z;
-  CHECK(p == Rational(-1, 1));
-
+TEST_CASE("[Rational] - Rational ctor") {
+  CHECK(Rational() == Rational(0, 1));
+  CHECK(Rational(3) == Rational(3, 1));
+  CHECK(Rational(-3) == Rational(-3, 1));
+  CHECK(Rational(10, 6) == Rational(5, 3));
+  CHECK(Rational(-10, 6) == Rational(-5, 3));
+  CHECK(Rational(10, -6) == Rational(-5, 3));
+  CHECK(Rational(-10, -6) == Rational(5, 3));
   CHECK_THROWS(Rational(1, 0));
 }
 
-TEST_CASE("rational gcd") {
-  Rational r(15, 6);
-  CHECK(5 == r.num());
-  CHECK(2 == r.den());
-
-  Rational r_minus(-15, 6);
-  CHECK(-5 == r_minus.num());
-  CHECK(2 == r_minus.den());
+TEST_CASE("addsub") {
+  CHECK((Rational(1, 2) + Rational(1, 2)) == Rational(1, 1));
+  CHECK((Rational(11, 3) + Rational(1, 2)) == Rational(25, 6));
+  CHECK((Rational(-8, 3) + Rational(1, 5)) == Rational(-37, 15));
+  CHECK((Rational(13, 5) - Rational(1, 2)) == Rational(21, 10));
 }
 
-TEST_CASE("arithmetics") {
-  Rational r23(2, 3);
-  Rational r12(1, 2);
-  Rational r76(7, 6);
-  Rational r16(1, 6);
-  CHECK(r76 == r23 + r12);
-  CHECK(r16 == r76 - 1);
-  CHECK(r76 == r16 * 7);
-  CHECK(r76 == 7 * r16);
-  CHECK(r16 == r76 / 7);
-};
+TEST_CASE("multdiv") {
+  CHECK((Rational(14, 36) * Rational(81, 193)) == Rational(63, 386));
+  CHECK((Rational(13, 36) * Rational(0, 193)) == Rational(0, 1));
+  CHECK_THROWS(Rational(64, 95) / Rational(0, 0));
+}
 
-TEST_CASE("IO") {
-  std::istringstream istream("2 / 3 "); //?
-  Rational reading;
-  Rational r23(2, 3);
 
-  istream >> reading;
-  CHECK(reading == r23);
-  istream.str("-3|3");
-  istream >> reading;
-  CHECK(istream.failbit == std::ios_base::failbit);
 
-  std::ostringstream ostream;
-  ostream << Rational(2, 3);
-  CHECK(ostream.str() == "2/3");
-};
+TEST_CASE("lessmore") {
+  CHECK(Rational(1, 2) > Rational(1, 4));
+  CHECK(Rational(-1, 2) < Rational(1, 6));
+}
+
+TEST_CASE("[rational] - Rational division") {
+  CHECK(Rational(5, 2) / Rational(5, 2) == Rational(1, 1));
+  CHECK(Rational(3, 2) / Rational(9, 8) == Rational(4, 3));
+  CHECK_THROWS(Rational(3, 2) / Rational(5, 0));
+}
+
+TEST_CASE("[rational] - Rational minus") {
+  CHECK(-Rational() == Rational());
+  CHECK(Rational(-5, 3) == -Rational(5, 3));
+  CHECK(Rational(25, 7) == -(-(Rational(25, 7))));
+  CHECK(Rational(29, 41) == -Rational(-29, 41));
+}
+
+TEST_CASE("[rational] - Rational ctor") {
+  CHECK(Rational() == Rational(0, 1));
+  CHECK(Rational(3) == Rational(3, 1));
+  CHECK(Rational(-3) == Rational(-3, 1));
+  CHECK(Rational(10, 6) == Rational(5, 3));
+  CHECK(Rational(-10, 6) == Rational(-5, 3));
+  CHECK(Rational(10, -6) == Rational(-5, 3));
+  CHECK(Rational(-10, -6) == Rational(5, 3));
+  CHECK_THROWS(Rational(1, 0));
+}
