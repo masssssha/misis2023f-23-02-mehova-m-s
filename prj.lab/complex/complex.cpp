@@ -103,13 +103,19 @@ Complex& Complex::operator/=(const double x) {
 }
 
 std::istream& Complex::ReadFrom(std::istream& istrm) noexcept {
-  int f(0), s(0);
-  char left, com, right;
-  istrm >> left >> f >> com >> s >> right;
+  char leftBrace(0);
+  double real(0.0);
+  char comma(0);
+  double imaganary(0.0);
+  char rightBrace(0);
+
+  istrm >> leftBrace >> real >> comma >> imaganary >> rightBrace;
+
   if (istrm.good()) {
-    if (left == '{' && com == ',' && right == '}') {
-      re = f;
-      im = s;
+    if ((Complex::leftBrace == leftBrace) && (Complex::separator == comma)
+      && (Complex::rightBrace == rightBrace)) {
+      re = real;
+      im = imaganary;
     }
     else {
       istrm.setstate(std::ios_base::failbit);
