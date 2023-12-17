@@ -16,8 +16,8 @@ class Rational {
 		std::int64_t num() const noexcept { return num_; }
 		std::int64_t den() const noexcept { return den_; }
 
-		std::istream& ReadFrom(std::istream& istrm) noexcept;
-		std::ostream& WriteTo(std::ostream& ostrm) const noexcept;
+		std::istream& readFrom(std::istream& istrm) noexcept;
+		std::ostream& writeTo(std::ostream& ostrm) const noexcept;
 		bool operator==(const Rational& x) const noexcept { return num_ * x.den_ - x.num_ * den_ == 0; }
 		bool operator!=(const Rational& x) const noexcept { return !operator==(x); }
 		bool operator>(const Rational& x) const noexcept { return num_ * x.den_ - x.num_ * den_ > 0; }
@@ -76,11 +76,11 @@ Rational operator/(const Rational& x, const int64_t y);
 Rational operator/(const int64_t x, const Rational& y);
 
 inline std::istream& operator>>(std::istream& istrm, Rational& x) noexcept {
-	return x.ReadFrom(istrm);
+	return x.readFrom(istrm);
 }
 
 inline std::ostream& operator<<(std::ostream& ostrm, Rational& x) noexcept {
-	return x.WriteTo(ostrm);
+	return x.writeTo(ostrm);
 }
 
 #endif
