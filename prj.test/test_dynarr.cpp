@@ -38,3 +38,14 @@ TEST_CASE("check") {
   CHECK_THROWS(da.Resize(0));
   CHECK_THROWS(DynArr(-1));
 };
+
+TEST_CASE("check cout") {
+  DynArr da(5);
+  for (int x = 0; x < 4; x += 1) {
+    da[x] = x;
+  }
+  std::ostringstream ostr("");
+  ostr.str("");
+  ostr << da;
+  CHECK_EQ(ostr.str(), "0 1 2 3 0");
+};

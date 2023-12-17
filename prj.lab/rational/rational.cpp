@@ -20,7 +20,7 @@ Rational::Rational(const std::int64_t& first, const std::int64_t& second) {
 Rational::Rational(const std::int64_t& first) : num_(first) {}
 
 //ввод
-std::istream& Rational::readFrom(std::istream& istrm) noexcept {
+std::istream& Rational::ReadFrom(std::istream& istrm) noexcept {
 	std::int64_t f(0), s(0);
 	char znak;
 	istrm >> f >> znak >> s;
@@ -36,7 +36,7 @@ std::istream& Rational::readFrom(std::istream& istrm) noexcept {
 }
 
 //вывод
-std::ostream& Rational::writeTo(std::ostream& ostrm) const noexcept {
+std::ostream& Rational::WriteTo(std::ostream& ostrm) const noexcept {
 	ostrm << num_ << '/' << den_;
 	return ostrm;
 }
