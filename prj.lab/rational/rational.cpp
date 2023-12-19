@@ -21,19 +21,28 @@ Rational::Rational(const std::int64_t& first) : num_(first) {}
 
 //ввод
 std::istream& Rational::readFrom(std::istream& istrm) noexcept {
-	std::int64_t f(0), s(0);
-	char znak;
-	istrm >> f >> znak >> s;
-	if (istrm.good()) {
-		if (znak == '/' && s > 0) {    //посмотрим прокатит ваш тест или нет если € это помен€ю
-			num_ = f;
-			den_ = s;
-		} else {
+	int64_t num(0);
+	char delimiter(0);
+	int64_t den(1);
+	istrm >> num;
+	istrm.get(delimiter);
+	int64_t trash = istrm.peek();
+	istrm >> den;
+	if (!istrm || trash > '9' || trash < '0') {
+		istrm.setstate(std::ios_base::failbit);
+		return istrm;
+	}
+	if (istrm.good() || istrm.eof()) {
+		if ('/' == delimiter && den > 0) {
+			*this = Rational(num, den);
+		}
+		else {
 			istrm.setstate(std::ios_base::failbit);
 		}
 	}
 	return istrm;
 }
+
 
 //вывод
 std::ostream& Rational::writeTo(std::ostream& ostrm) const noexcept {
