@@ -43,7 +43,6 @@ std::istream& Rational::readFrom(std::istream& istrm) noexcept {
 	return istrm;
 }
 
-
 //вывод
 std::ostream& Rational::writeTo(std::ostream& ostrm) const noexcept {
 	ostrm << num_ << '/' << den_;
