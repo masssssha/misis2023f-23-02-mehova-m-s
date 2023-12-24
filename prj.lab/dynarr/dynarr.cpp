@@ -43,14 +43,12 @@ void DynArr::Resize(const std::ptrdiff_t s) {
 			}
 		}
 		size_ = s;
-	}
-	else {
+	}	else {
 		float* newdata_ = new float[s];
 		for (int i = 0; i < s; i++) {
 			if (i < (*this).Size()) {
 				*(newdata_ + i) = *(data_ + i);
-			}
-			else {
+			} else {
 				*(newdata_ + i) = 0.0f;
 			}
 		}
