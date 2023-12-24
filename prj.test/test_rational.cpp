@@ -72,7 +72,6 @@ TEST_CASE("IO") {
   istream.str("-3|3");
   istream >> reading;
   CHECK(istream.failbit == std::ios_base::failbit);
-
   std::ostringstream ostream;
   ostream << Rational(2, 3);
   CHECK(ostream.str() == "2/3");

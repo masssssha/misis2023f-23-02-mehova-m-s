@@ -5,17 +5,12 @@
 
 //конструктор
 Rational::Rational(const std::int64_t& first, const std::int64_t& second) {
-	if (second > 0) {
-		num_ = first / nod(first, second);
-		den_ = second / nod(first, second);
-	}
-	if (second < 0) {
-		num_ = -first / nod(first, second);
-		den_ = -second / nod(first, second);
-	}
 	if (second == 0) {
 			throw std::invalid_argument("Zero denumenator in Rational ctor");
 	}
+	num_ = first;
+	den_ = second;
+	norm();
 }
 Rational::Rational(const std::int64_t& first) : num_(first) {}
 
