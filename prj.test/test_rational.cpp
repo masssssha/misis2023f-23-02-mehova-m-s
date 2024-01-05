@@ -4,12 +4,12 @@
 #include <iostream>
 #include <sstream>
 
-
 void testing() {
-  Rational r(int64_t(3));
-  std::cout << Rational(4) << std::endl;
+  typedef Rational Rat;
+  Rat r(int64_t(3));
+  std::cout << Rat(4) << std::endl;
 
-  std::cout << Rational(4, 3) << std::endl;
+  std::cout << Rat(4, 3) << std::endl;
   try {
     std::cout << Rational(4, 0) << std::endl;
   }

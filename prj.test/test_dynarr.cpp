@@ -37,4 +37,5 @@ TEST_CASE("check") {
   CHECK_THROWS(da.Resize(-1));
   CHECK_THROWS(da.Resize(0));
   CHECK_THROWS(DynArr(-1));
+  CHECK_THROWS(void(DynArr(0)));
 };
